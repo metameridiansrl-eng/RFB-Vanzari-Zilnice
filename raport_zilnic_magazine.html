@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raport Zilnic — Retro Future Babe</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #E63946;
+    --dark: #1A1A2E;
+    --mid: #2C2C44;
+    --light-bg: #F7F7FA;
+    --border: #E0E0E8;
+    --text: #1A1A2E;
+    --muted: #777;
+    --success: #2E7D32;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 60px 0;
+  }
+
+  header {
+    background: var(--dark);
+    padding: 24px 24px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  header .brand {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .form-wrap {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .section {
+    margin-top: 28px;
+  }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .field {
+    margin-bottom: 16px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  label .hint {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 12px;
+    margin-left: 4px;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 16px;
+    background: #fff;
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(230,57,70,.10);
+  }
+  textarea { resize: vertical; min-height: 90px; font-size: 15px; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+
+  /* Row de 2 câmpuri */
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Câmp sumă cu prefix */
+  .money-wrap { position: relative; }
+  .money-wrap input { padding-left: 48px; }
+  .money-prefix {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  /* Counter trafic */
+  .counter-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    transition: border-color .15s;
+  }
+  .counter-wrap:focus-within { border-color: var(--red); box-shadow: 0 0 0 3px rgba(230,57,70,.10); }
+  .counter-btn {
+    width: 52px;
+    height: 52px;
+    background: var(--light-bg);
+    border: none;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--dark);
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .counter-btn:active { background: var(--border); }
+  .counter-input {
+    flex: 1;
+    border: none !important;
+    box-shadow: none !important;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 13px 4px !important;
+    border-radius: 0 !important;
+  }
+
+  /* Ore moarte */
+  .ore-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .ore-item {
+    display: none;
+  }
+  .ore-item + label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 6px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    background: #fff;
+    color: var(--muted);
+    transition: all .15s;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ore-item:checked + label {
+    border-color: var(--red);
+    background: #FFF0F1;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* Rating stare */
+  .rating-wrap {
+    display: flex;
+    gap: 8px;
+  }
+  .rating-wrap input { display: none; }
+  .rating-wrap label {
+    flex: 1;
+    padding: 11px 6px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    background: #fff;
+    color: var(--muted);
+    transition: all .15s;
+    margin-bottom: 0;
+  }
+  .rating-wrap input:checked + label {
+    border-color: var(--dark);
+    background: var(--dark);
+    color: #fff;
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 32px 0 0; }
+
+  .submit-btn {
+    display: block;
+    width: 100%;
+    margin-top: 28px;
+    padding: 17px;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .submit-btn:active { background: #C0303C; transform: scale(.98); }
+
+  /* Succes */
+  #success {
+    display: none;
+    text-align: center;
+    padding: 60px 24px;
+  }
+  #success .check {
+    font-size: 56px;
+    margin-bottom: 16px;
+  }
+  #success h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  #success p {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  #success button {
+    background: var(--dark);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .required-star { color: var(--red); margin-left: 2px; }
+  .char-count { font-size: 11px; color: var(--muted); text-align: right; margin-top: 4px; }
+
+  @media (max-width: 380px) {
+    .ore-grid { grid-template-columns: repeat(2, 1fr); }
+    .row2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Retro Future Babe</div>
+  <h1>Raport Zilnic Magazin</h1>
+</header>
+
+<div class="form-wrap">
+
+  <form id="reportForm">
+
+    <!-- IDENTIFICARE -->
+    <div class="section">
+      <div class="section-label">Identificare</div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Magazin <span class="required-star">*</span></label>
+          <select name="magazin" required>
+            <option value="" disabled selected>Alege...</option>
+            <option value="AFI Mall București">AFI Mall București</option>
+            <option value="Iulius Mall Cluj">Iulius Mall Cluj</option>
+            <option value="Palas Iași">Palas Iași</option>
+            <option value="Promenada București">Promenada București</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Data <span class="required-star">*</span></label>
+          <input type="date" name="data" required id="dataInput">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Completat de <span class="required-star">*</span></label>
+        <input type="text" name="nume" placeholder="Prenumele tău" required autocomplete="given-name">
+      </div>
+    </div>
+
+    <!-- VÂNZĂRI -->
+    <div class="section">
+      <div class="section-label">Vânzări</div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Total vânzări <span class="required-star">*</span><span class="hint">(lei, cu TVA)</span></label>
+          <div class="money-wrap">
+            <span class="money-prefix">Lei</span>
+            <input type="number" name="vanzari_total" placeholder="0" min="0" step="1" required inputmode="numeric">
+          </div>
+        </div>
+        <div class="field">
+          <label>Din care RF<span class="hint"> (lei)</span></label>
+          <div class="money-wrap">
+            <span class="money-prefix">Lei</span>
+            <input type="number" name="vanzari_rf" placeholder="0" min="0" step="1" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Nr. bonuri <span class="required-star">*</span></label>
+          <input type="number" name="nr_bonuri" placeholder="0" min="0" required inputmode="numeric">
+        </div>
+        <div class="field">
+          <label>Coș mediu<span class="hint"> (lei)</span></label>
+          <input type="number" name="cos_mediu" placeholder="auto" min="0" step="1" id="cosMediu" readonly style="background:#f7f7fa; color:#777;">
+        </div>
+      </div>
+    </div>
+
+    <!-- RETURURI -->
+    <div class="section">
+      <div class="section-label">Retururi</div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Nr. retururi</label>
+          <input type="number" name="nr_retururi" placeholder="0" min="0" inputmode="numeric" id="nrRetururi">
+        </div>
+        <div class="field">
+          <label>Valoare retururi<span class="hint"> (lei)</span></label>
+          <div class="money-wrap">
+            <span class="money-prefix">Lei</span>
+            <input type="number" name="val_retururi" placeholder="0" min="0" step="1" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+
+      <div class="field" id="motivRetur" style="display:none">
+        <label>Motiv retur <span class="hint">(dacă știi)</span></label>
+        <textarea name="motiv_retur" placeholder="Ex: calitate, mărime greșită, produs purtat..."></textarea>
+      </div>
+    </div>
+
+    <!-- TRAFIC -->
+    <div class="section">
+      <div class="section-label">Trafic</div>
+
+      <div class="field">
+        <label>Clienți intrați în magazin <span class="required-star">*</span></label>
+        <div class="counter-wrap">
+          <button type="button" class="counter-btn" onclick="changeCounter('trafic', -1)">−</button>
+          <input type="number" class="counter-input" name="trafic" id="traficInput" value="0" min="0" inputmode="numeric" readonly>
+          <button type="button" class="counter-btn" onclick="changeCounter('trafic', +1)">+</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STARE MAGAZIN -->
+    <div class="section">
+      <div class="section-label">Observații</div>
+
+      <div class="field">
+        <label>Observații<span class="hint"> (opțional)</span></label>
+        <textarea name="observatii" id="obsText" placeholder="Produse cerute și lipsă, feedback clienți, probleme tehnice, atmosferă..." maxlength="500"></textarea>
+        <div class="char-count"><span id="charCount">0</span>/500</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <button type="submit" class="submit-btn">✓ Trimite pe WhatsApp</button>
+
+  </form>
+
+  <!-- SUCCESS -->
+  <div id="success">
+    <div class="check">✅</div>
+    <h2>Raport trimis!</h2>
+    <p id="successMsg">Raportul pentru azi a fost trimis cu succes.</p>
+    <button onclick="resetForm()">+ Raport nou</button>
+  </div>
+
+</div>
+
+<script>
+  // Set today's date
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  document.getElementById('dataInput').value = `${yyyy}-${mm}-${dd}`;
+
+  // Counter trafic
+  function changeCounter(id, delta) {
+    const el = document.getElementById(id + 'Input');
+    const val = Math.max(0, (parseInt(el.value) || 0) + delta);
+    el.value = val;
+  }
+
+  // Coș mediu auto
+  function updateCosMediu() {
+    const vanzari = parseFloat(document.querySelector('[name="vanzari_total"]').value) || 0;
+    const bonuri = parseInt(document.querySelector('[name="nr_bonuri"]').value) || 0;
+    const cos = document.getElementById('cosMediu');
+    if (vanzari > 0 && bonuri > 0) {
+      cos.value = Math.round(vanzari / bonuri);
+    } else {
+      cos.value = '';
+    }
+  }
+  document.querySelector('[name="vanzari_total"]').addEventListener('input', updateCosMediu);
+  document.querySelector('[name="nr_bonuri"]').addEventListener('input', updateCosMediu);
+
+  // Motiv retur — apare dacă e cel puțin 1 retur
+  document.getElementById('nrRetururi').addEventListener('input', function() {
+    const v = parseInt(this.value) || 0;
+    document.getElementById('motivRetur').style.display = v > 0 ? 'block' : 'none';
+  });
+
+  // Char count
+  document.getElementById('obsText').addEventListener('input', function() {
+    document.getElementById('charCount').textContent = this.value.length;
+  });
+
+  // Submit — construiește mesaj WhatsApp
+  document.getElementById('reportForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const fd = new FormData(this);
+
+    const magazin  = fd.get('magazin') || '';
+    const data     = fd.get('data') || '';
+    const nume     = fd.get('nume') || '';
+    const vTotal   = fd.get('vanzari_total') || '0';
+    const vRF      = fd.get('vanzari_rf') || '0';
+    const bonuri   = fd.get('nr_bonuri') || '0';
+    const cosMediu = document.getElementById('cosMediu').value || '-';
+    const nrRet    = fd.get('nr_retururi') || '0';
+    const valRet   = fd.get('val_retururi') || '0';
+    const motivRet = fd.get('motiv_retur') || '';
+    const trafic   = document.getElementById('traficInput').value || '0';
+    const obs      = fd.get('observatii') || '';
+
+    const [y, m, d] = data.split('-');
+    const dateRO = `${d}.${m}.${y}`;
+    const ziSapt = ['Dum','Lun','Mar','Mie','Joi','Vin','Sâm'][new Date(data).getDay()];
+
+    const pctRF = parseFloat(vTotal) > 0 ? Math.round((parseFloat(vRF)/parseFloat(vTotal))*100) + '%' : '-';
+    const conversie = parseInt(trafic) > 0 && parseInt(bonuri) > 0
+      ? Math.round((parseInt(bonuri)/parseInt(trafic))*100) + '%' : '-';
+
+    const returLine = parseInt(nrRet) > 0
+      ? `↩️ *Retururi:* ${nrRet} buc / ${parseFloat(valRet||0).toLocaleString('ro-RO')} lei${motivRet ? '\n   _Motiv: ' + motivRet + '_' : ''}`
+      : `↩️ *Retururi:* 0`;
+
+    const obsLine = obs ? `\n💬 *Obs:* ${obs}` : '';
+
+    const msg =
+`📊 *RAPORT ZILNIC*
+📍 ${magazin} — ${ziSapt} ${dateRO}
+👤 ${nume}
+
+💰 *Vânzări:* ${parseFloat(vTotal).toLocaleString('ro-RO')} lei
+   RF: ${parseFloat(vRF||0).toLocaleString('ro-RO')} lei (${pctRF})
+   Bonuri: ${bonuri} | Coș mediu: ${cosMediu} lei
+${returLine}
+👥 *Trafic:* ${trafic} clienți | Conversie: ${conversie}${obsLine}`;
+
+    const encoded = encodeURIComponent(msg);
+    window.open(`https://wa.me/?text=${encoded}`, '_blank');
+
+    document.getElementById('reportForm').style.display = 'none';
+    document.getElementById('successMsg').textContent =
+      `Alege grupul în WhatsApp și apasă Trimite.`;
+    document.getElementById('success').style.display = 'block';
+  });
+
+  function resetForm() {
+    document.getElementById('reportForm').reset();
+    document.getElementById('dataInput').value = `${yyyy}-${mm}-${dd}`;
+    document.getElementById('traficInput').value = 0;
+    document.getElementById('cosMediu').value = '';
+    document.getElementById('motivRetur').style.display = 'none';
+    document.getElementById('charCount').textContent = '0';
+    document.getElementById('reportForm').style.display = 'block';
+    document.getElementById('success').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
