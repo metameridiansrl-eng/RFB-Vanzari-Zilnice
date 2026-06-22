@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retro Future Babe — Comunitate</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --red: #E63946; --dark: #1A1A2E; --light-bg: #F7F7FA; --border: #E0E0E8; --text: #1A1A2E; --muted: #777; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--light-bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; }
+
+  header { background: var(--dark); padding: 32px 24px 28px; text-align: center; }
+  header .brand { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 8px; }
+  header h1 { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.3; }
+  header p { font-size: 14px; color: #aaa; margin-top: 8px; }
+
+  .form-wrap { max-width: 520px; margin: 0 auto; padding: 0 16px; }
+
+  /* Tip selector */
+  .tip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
+  .tip-item input { display: none; }
+  .tip-item label {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 18px 10px; border: 2px solid var(--border); border-radius: 14px;
+    background: #fff; cursor: pointer; transition: all .15s; text-align: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tip-item label .ico { font-size: 28px; margin-bottom: 6px; }
+  .tip-item label .lbl { font-size: 13px; font-weight: 700; color: var(--dark); }
+  .tip-item label .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .tip-item input:checked + label { border-color: var(--red); background: #FFF0F1; }
+  .tip-item input:checked + label .lbl { color: var(--red); }
+
+  .section { margin-top: 28px; }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .field { margin-bottom: 16px; }
+  label.field-label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
+  label.field-label .hint { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 4px; }
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+    width: 100%; padding: 13px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: 16px; background: #fff; color: var(--text); outline: none; transition: border-color .15s; -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(230,57,70,.10); }
+  textarea { resize: vertical; min-height: 110px; font-size: 15px; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+  .required-star { color: var(--red); margin-left: 2px; }
+
+  /* GDPR box */
+  .gdpr-box {
+    background: #fff; border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 16px; margin-top: 8px;
+  }
+  .gdpr-box p { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+  .gdpr-check { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+  .gdpr-check input[type="checkbox"] { width: 20px; height: 20px; min-width: 20px; margin-top: 1px; accent-color: var(--red); cursor: pointer; }
+  .gdpr-check span { font-size: 13px; font-weight: 600; color: var(--dark); line-height: 1.5; }
+
+  .divider { height: 1px; background: var(--border); margin: 28px 0 0; }
+
+  .submit-btn { display: block; width: 100%; margin-top: 24px; padding: 17px; background: var(--red); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .15s, transform .1s; -webkit-tap-highlight-color: transparent; }
+  .submit-btn:active { background: #C0303C; transform: scale(.98); }
+  .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+  .status-bar { display: none; margin-top: 12px; padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; text-align: center; }
+  .status-bar.saving { display: block; background: #FFF3CD; color: #856404; }
+  .status-bar.saved { display: block; background: #D4EDDA; color: #155724; }
+  .status-bar.error { display: block; background: #F8D7DA; color: #721C24; }
+
+  #success { display: none; text-align: center; padding: 60px 24px; }
+  #success .check { font-size: 64px; margin-bottom: 16px; }
+  #success h2 { font-size: 22px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+  #success p { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 28px; }
+  #success button { background: var(--dark); color: #fff; border: none; border-radius: 10px; padding: 14px 32px; font-size: 15px; font-weight: 600; cursor: pointer; }
+
+  .hidden { display: none; }
+  @media (max-width: 360px) { .tip-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Retro Future Babe</div>
+  <h1>Comunitatea noastră<br>te așteaptă ✨</h1>
+  <p>Înscrie-te, lasă-ne o sugestie, opinie sau reclamație</p>
+</header>
+
+<div class="form-wrap">
+  <form id="mainForm">
+
+    <!-- TIP -->
+    <div class="section">
+      <div class="section-label">Ce dorești?</div>
+      <div class="tip-grid">
+        <div class="tip-item">
+          <input type="radio" name="tip" value="Inscriere" id="t1" required>
+          <label for="t1"><span class="ico">🎀</span><span class="lbl">Înscriere</span><span class="sub">Bază de date clienți</span></label>
+        </div>
+        <div class="tip-item">
+          <input type="radio" name="tip" value="Sugestie" id="t2">
+          <label for="t2"><span class="ico">💡</span><span class="lbl">Sugestie</span><span class="sub">Idei pentru noi</span></label>
+        </div>
+        <div class="tip-item">
+          <input type="radio" name="tip" value="Opinie" id="t3">
+          <label for="t3"><span class="ico">⭐</span><span class="lbl">Opinie</span><span class="sub">Experiența ta</span></label>
+        </div>
+        <div class="tip-item">
+          <input type="radio" name="tip" value="Reclamatie" id="t4">
+          <label for="t4"><span class="ico">📢</span><span class="lbl">Reclamație</span><span class="sub">Rezolvăm împreună</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATE PERSONALE -->
+    <div class="section">
+      <div class="section-label">Date personale</div>
+
+      <div class="field">
+        <label class="field-label">Nume complet <span class="required-star">*</span></label>
+        <input type="text" name="nume" placeholder="Prenume Nume" required autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Număr de telefon <span class="required-star">*</span></label>
+        <input type="tel" name="telefon" placeholder="07XX XXX XXX" required autocomplete="tel" inputmode="tel">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Adresă email <span class="required-star">*</span></label>
+        <input type="email" name="email" placeholder="adresa@email.com" required autocomplete="email" inputmode="email">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Magazinul preferat <span class="required-star">*</span></label>
+        <select name="locatie" required>
+          <option value="" disabled selected>Alege locația...</option>
+          <option value="AFI Mall București">AFI Mall București</option>
+          <option value="Iulius Mall Cluj">Iulius Mall Cluj</option>
+          <option value="Palas Iași">Palas Iași</option>
+          <option value="Promenada București">Promenada București</option>
+          <option value="Online">Online</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- MESAJ -->
+    <div class="section">
+      <div class="section-label">Mesaj</div>
+      <div class="field">
+        <label class="field-label" id="obsLabel">Sugestii / Opinii / Observații<span class="hint"> (opțional)</span></label>
+        <textarea name="mesaj" id="mesajInput" placeholder="Scrie-ne orice..."></textarea>
+      </div>
+    </div>
+
+    <!-- GDPR -->
+    <div class="section">
+      <div class="section-label">Acord GDPR</div>
+      <div class="gdpr-box">
+        <p>Datele tale personale (nume, telefon, email, locație) sunt colectate și prelucrate de <strong>Retro Future Babe</strong> în scopul comunicărilor comerciale, îmbunătățirii serviciilor și gestionării solicitărilor tale, în conformitate cu <strong>Regulamentul (UE) 2016/679 (GDPR)</strong>. Datele nu vor fi transmise către terți fără consimțământul tău. Ai dreptul de acces, rectificare, ștergere și opoziție, pe care le poți exercita contactând: <strong>contact@retrofuturebabe.com</strong>. Datele vor fi păstrate pe o perioadă de maximum 3 ani sau până la retragerea consimțământului.</p>
+        <label class="gdpr-check">
+          <input type="checkbox" id="gdprCheck" required>
+          <span>Am citit și sunt de acord cu prelucrarea datelor mele personale în conformitate cu politica de confidențialitate RFB. <span class="required-star">*</span></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <button type="submit" class="submit-btn" id="submitBtn">✓ Trimite</button>
+    <div class="status-bar" id="statusBar"></div>
+
+  </form>
+
+  <div id="success">
+    <div class="check" id="successIco">🎀</div>
+    <h2 id="successTitle">Mulțumim!</h2>
+    <p id="successMsg">Te-ai înscris cu succes în comunitatea Retro Future Babe. Te vom contacta cu noutăți și oferte exclusive.</p>
+    <button onclick="resetForm()">← Înapoi</button>
+  </div>
+</div>
+
+<script>
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgtrzrxb6uXkPHN-k82bs3mfwAxZHYA5N_opo8fAJ8iXRsbJzMnh0N4Joys0o2Hjug/exec";
+
+  // Adapteaza label mesaj in functie de tip
+  const tipInputs = document.querySelectorAll('input[name="tip"]');
+  const obsLabel  = document.getElementById('obsLabel');
+  const mesaj     = document.getElementById('mesajInput');
+
+  const config = {
+    'Inscriere':  { label: 'Observații', hint: ' (opțional)', placeholder: 'Preferințe, mărimi, stiluri preferate...' },
+    'Sugestie':   { label: 'Sugestia ta', hint: ' *', placeholder: 'Spune-ne ce ai vrea să îmbunătățim sau să adăugăm...' },
+    'Opinie':     { label: 'Opinia ta', hint: ' *', placeholder: 'Cum a fost experiența ta cu noi?' },
+    'Reclamatie': { label: 'Descrie problema', hint: ' *', placeholder: 'Ce s-a întâmplat? Cu cât mai multe detalii, cu atât mai bine.' },
+  };
+
+  tipInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      const c = config[input.value];
+      if (c) {
+        obsLabel.innerHTML = `${c.label}<span class="hint">${c.hint}</span>`;
+        mesaj.placeholder = c.placeholder;
+        if (c.hint === ' *') mesaj.required = true;
+        else mesaj.required = false;
+      }
+    });
+  });
+
+  // Submit
+  document.getElementById('mainForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const fd  = new FormData(this);
+    const btn = document.getElementById('submitBtn');
+    const statusBar = document.getElementById('statusBar');
+
+    const payload = {
+      tip:      'client',
+      subtip:   fd.get('tip') || '',
+      nume:     fd.get('nume') || '',
+      telefon:  fd.get('telefon') || '',
+      email:    fd.get('email') || '',
+      locatie:  fd.get('locatie') || '',
+      mesaj:    fd.get('mesaj') || '',
+      gdpr:     'Da — acord dat la submit',
+      timestamp: new Date().toISOString()
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Se salvează...';
+    statusBar.className = 'status-bar saving';
+    statusBar.textContent = '⏳ Se înregistrează...';
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
+      });
+      statusBar.className = 'status-bar saved';
+      statusBar.textContent = '✓ Înregistrat!';
+    } catch(err) {
+      statusBar.className = 'status-bar error';
+      statusBar.textContent = '⚠️ Eroare la salvare.';
+    }
+
+    // Mesaj succes adaptat
+    const msgs = {
+      'Inscriere':  { ico: '🎀', title: 'Bine ai venit!', msg: 'Te-ai înscris cu succes în comunitatea Retro Future Babe. Te vom contacta cu noutăți și oferte exclusive.' },
+      'Sugestie':   { ico: '💡', title: 'Mulțumim!', msg: 'Sugestia ta a fost înregistrată. O citim cu atenție și îți mulțumim că ne ajuți să ne îmbunătățim.' },
+      'Opinie':     { ico: '⭐', title: 'Mulțumim!', msg: 'Opinia ta contează enorm pentru noi. Ne bucurăm că ai luat timp să ne scrii.' },
+      'Reclamatie': { ico: '📢', title: 'Am primit!', msg: 'Reclamația ta a fost înregistrată. Te vom contacta în cel mai scurt timp pentru a rezolva situația.' },
+    };
+    const m = msgs[payload.subtip] || msgs['Inscriere'];
+
+    setTimeout(() => {
+      document.getElementById('mainForm').style.display = 'none';
+      document.getElementById('successIco').textContent  = m.ico;
+      document.getElementById('successTitle').textContent = m.title;
+      document.getElementById('successMsg').textContent   = m.msg;
+      document.getElementById('success').style.display   = 'block';
+    }, 600);
+  });
+
+  function resetForm() {
+    document.getElementById('mainForm').reset();
+    document.getElementById('mainForm').style.display = 'block';
+    document.getElementById('success').style.display  = 'none';
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').textContent = '✓ Trimite';
+    document.getElementById('statusBar').className = 'status-bar';
+    obsLabel.innerHTML = 'Sugestii / Opinii / Observații<span class="hint"> (opțional)</span>';
+    mesaj.placeholder = 'Scrie-ne orice...';
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
