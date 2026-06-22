@@ -262,11 +262,11 @@
     try {
       const response = await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(payload)
       });
-      const result = await response.json();
-      savedOk = result.ok;
+      savedOk = true;
     } catch(err) {
       savedOk = false;
     }
