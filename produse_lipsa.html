@@ -3,101 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Produse Lipsă — Retro Future Babe</title>
+<title>Raport Zilnic — Retro Future Babe</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --red: #E63946; --dark: #1A1A2E; --light-bg: #F7F7FA; --border: #E0E0E8; --text: #1A1A2E; --muted: #777; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--light-bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; }
-
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--light-bg); color: var(--text); min-height: 100vh; padding-bottom: 60px; }
   header { background: var(--dark); padding: 24px 24px 20px; position: sticky; top: 0; z-index: 10; }
   header .brand { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 4px; }
   header h1 { font-size: 20px; font-weight: 700; color: #fff; }
-
-  .form-wrap { max-width: 560px; margin: 0 auto; padding: 0 16px; }
-
-  .section { margin-top: 24px; }
+  .form-wrap { max-width: 520px; margin: 0 auto; padding: 0 16px; }
+  .section { margin-top: 28px; }
   .section-label { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  .field { margin-bottom: 14px; }
+  .field { margin-bottom: 16px; }
   label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
   label .hint { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 4px; }
-  input[type="text"], input[type="date"], input[type="number"], select, textarea {
-    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px;
-    font-size: 16px; background: #fff; color: var(--text); outline: none; transition: border-color .15s; -webkit-appearance: none;
-  }
+  input[type="text"], input[type="date"], input[type="number"], select, textarea { width: 100%; padding: 13px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 16px; background: #fff; color: var(--text); outline: none; transition: border-color .15s; -webkit-appearance: none; }
   input:focus, select:focus, textarea:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(230,57,70,.10); }
-  textarea { resize: vertical; min-height: 70px; font-size: 15px; }
+  textarea { resize: vertical; min-height: 90px; font-size: 15px; }
   select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-  .required-star { color: var(--red); margin-left: 2px; }
   .money-wrap { position: relative; }
   .money-wrap input { padding-left: 48px; }
   .money-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 700; color: var(--muted); pointer-events: none; }
-
-  /* Card produs */
-  .produse-list { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
-  .produs-card {
-    background: #fff;
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    position: relative;
-  }
-  .produs-card .card-nr {
-    font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--red); margin-bottom: 12px;
-  }
-  .produs-card .remove-btn {
-    position: absolute; top: 12px; right: 12px;
-    background: #fee; border: 1.5px solid #fcc; border-radius: 6px;
-    color: var(--red); font-size: 13px; font-weight: 700;
-    padding: 4px 10px; cursor: pointer; line-height: 1;
-  }
-  .produs-card .remove-btn:active { background: #fcc; }
-
-  .add-btn {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    width: 100%; padding: 13px; margin-top: 4px;
-    background: #fff; border: 2px dashed var(--border); border-radius: 12px;
-    font-size: 15px; font-weight: 600; color: var(--muted); cursor: pointer;
-    transition: border-color .15s, color .15s;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .add-btn:active { border-color: var(--red); color: var(--red); }
-
-  .divider { height: 1px; background: var(--border); margin: 28px 0 0; }
-
-  .submit-btn { display: block; width: 100%; margin-top: 24px; padding: 17px; background: var(--red); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .15s, transform .1s; -webkit-tap-highlight-color: transparent; }
+  .nete-box { background: var(--dark); border-radius: 10px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .nete-box .label { font-size: 12px; color: #aaa; font-weight: 500; }
+  .nete-box .value { font-size: 24px; font-weight: 800; color: #fff; }
+  .nete-box .value span { font-size: 14px; font-weight: 400; color: #aaa; margin-left: 4px; }
+  .counter-wrap { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; background: #fff; transition: border-color .15s; }
+  .counter-wrap:focus-within { border-color: var(--red); box-shadow: 0 0 0 3px rgba(230,57,70,.10); }
+  .counter-btn { width: 52px; height: 52px; background: var(--light-bg); border: none; font-size: 22px; color: var(--dark); cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: background .1s; -webkit-tap-highlight-color: transparent; }
+  .counter-btn:active { background: var(--border); }
+  .counter-input { flex: 1; border: none !important; box-shadow: none !important; text-align: center; font-size: 22px; font-weight: 700; padding: 13px 4px !important; border-radius: 0 !important; }
+  .divider { height: 1px; background: var(--border); margin: 32px 0 0; }
+  .char-count { font-size: 11px; color: var(--muted); text-align: right; margin-top: 4px; }
+  .required-star { color: var(--red); margin-left: 2px; }
+  .submit-btn { display: block; width: 100%; margin-top: 28px; padding: 17px; background: var(--red); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .15s, transform .1s; -webkit-tap-highlight-color: transparent; }
   .submit-btn:active { background: #C0303C; transform: scale(.98); }
   .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
-
   .status-bar { display: none; margin-top: 12px; padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; text-align: center; }
   .status-bar.saving { display: block; background: #FFF3CD; color: #856404; }
   .status-bar.saved { display: block; background: #D4EDDA; color: #155724; }
   .status-bar.error { display: block; background: #F8D7DA; color: #721C24; }
-
   #success { display: none; text-align: center; padding: 60px 24px; }
   #success .check { font-size: 56px; margin-bottom: 16px; }
   #success h2 { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
-  #success p { font-size: 15px; color: var(--muted); margin-bottom: 28px; line-height: 1.5; }
+  #success p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
   #success button { background: var(--dark); color: #fff; border: none; border-radius: 10px; padding: 14px 32px; font-size: 15px; font-weight: 600; cursor: pointer; }
-
-  @media (max-width: 400px) { .row2 { grid-template-columns: 1fr; } .row3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 380px) { .row2 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-
 <header>
   <img src="data:image/png;base64,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" alt="Retro Future" style="height:72px;margin-bottom:10px;display:block;">
-  <h1>Produse Cerute &amp; Lipsă</h1>
+  <h1>Raport Zilnic Magazin</h1>
 </header>
-
 <div class="form-wrap">
-  <form id="mainForm">
+  <form id="reportForm">
 
-    <!-- IDENTIFICARE -->
     <div class="section">
       <div class="section-label">Identificare</div>
       <div class="row2">
@@ -113,7 +76,7 @@
         </div>
         <div class="field">
           <label>Data <span class="required-star">*</span></label>
-          <input type="date" name="data" id="dataInput" required>
+          <input type="date" name="data" required id="dataInput">
         </div>
       </div>
       <div class="field">
@@ -122,22 +85,99 @@
       </div>
     </div>
 
-    <!-- PRODUSE -->
     <div class="section">
-      <div class="section-label">Produse lipsă</div>
-      <div class="produse-list" id="produseList"></div>
-      <button type="button" class="add-btn" id="addBtn" onclick="adaugaProdus()">+ Adaugă produs</button>
+      <div class="section-label">Vânzări</div>
+      <div class="field">
+        <label>Total Z <span class="required-star">*</span><span class="hint">(valoarea din casa de marcat, lei)</span></label>
+        <div class="money-wrap">
+          <span class="money-prefix">Lei</span>
+          <input type="number" name="total_z" id="totalZ" placeholder="0" min="0" step="1" required inputmode="numeric">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Din care Cash<span class="hint"> (lei)</span></label>
+          <div class="money-wrap">
+            <span class="money-prefix">Lei</span>
+            <input type="number" name="cash" placeholder="0" min="0" step="1" inputmode="numeric">
+          </div>
+        </div>
+        <div class="field">
+          <label>Din care Card<span class="hint"> (lei)</span></label>
+          <div class="money-wrap">
+            <span class="money-prefix">Lei</span>
+            <input type="number" name="card" placeholder="0" min="0" step="1" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Nr. bonuri <span class="required-star">*</span></label>
+          <input type="number" name="nr_bonuri" id="nrBonuri" placeholder="0" min="0" required inputmode="numeric">
+        </div>
+        <div class="field">
+          <label>Din care RF<span class="hint"> (lei)</span></label>
+          <div class="money-wrap">
+            <span class="money-prefix">Lei</span>
+            <input type="number" name="vanzari_rf" placeholder="0" min="0" step="1" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Retururi</div>
+      <div class="row2">
+        <div class="field">
+          <label>Nr. retururi</label>
+          <input type="number" name="nr_retururi" placeholder="0" min="0" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label>Valoare retururi<span class="hint"> (lei)</span></label>
+          <div class="money-wrap">
+            <span class="money-prefix">Lei</span>
+            <input type="number" name="val_retururi" id="valRetururi" placeholder="0" min="0" step="1" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Vânzări Nete</div>
+      <div class="nete-box">
+        <div class="label">Total Z − Retururi</div>
+        <div class="value"><span id="neteDisplay">0</span> <span>lei</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Trafic</div>
+      <div class="field">
+        <label>Clienți intrați <span class="required-star">*</span><span class="hint"> (0 = necontorizat)</span></label>
+        <div class="counter-wrap">
+          <button type="button" class="counter-btn" onclick="changeCounter(-1)">−</button>
+          <input type="number" class="counter-input" name="trafic" id="traficInput" value="0" min="0" inputmode="numeric" readonly>
+          <button type="button" class="counter-btn" onclick="changeCounter(+1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Observații</div>
+      <div class="field">
+        <textarea name="observatii" id="obsText" placeholder="Produse cerute și lipsă, feedback clienți, probleme, atmosferă..." maxlength="500"></textarea>
+        <div class="char-count"><span id="charCount">0</span>/500</div>
+      </div>
     </div>
 
     <div class="divider"></div>
-    <button type="submit" class="submit-btn" id="submitBtn">✓ Trimite</button>
+    <button type="submit" class="submit-btn" id="submitBtn">✓ Trimite raportul</button>
     <div class="status-bar" id="statusBar"></div>
-
   </form>
 
   <div id="success">
     <div class="check">✅</div>
-    <h2>Trimis!</h2>
+    <h2>Raport trimis!</h2>
     <p id="successMsg"></p>
     <button onclick="resetForm()">+ Raport nou</button>
   </div>
@@ -146,111 +186,47 @@
 <script>
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgtrzrxb6uXkPHN-k82bs3mfwAxZHYA5N_opo8fAJ8iXRsbJzMnh0N4Joys0o2Hjug/exec";
 
-  // Set today
   const today = new Date();
   const yyyy = today.getFullYear();
   const mm = String(today.getMonth()+1).padStart(2,'0');
   const dd = String(today.getDate()).padStart(2,'0');
   document.getElementById('dataInput').value = `${yyyy}-${mm}-${dd}`;
 
-  let produsCount = 0;
-
-  function adaugaProdus() {
-    produsCount++;
-    const id = produsCount;
-    const list = document.getElementById('produseList');
-
-    const card = document.createElement('div');
-    card.className = 'produs-card';
-    card.id = `produs-${id}`;
-    card.innerHTML = `
-      <div class="card-nr">Produs #${id}</div>
-      <button type="button" class="remove-btn" onclick="sterge(${id})">✕</button>
-
-      <div class="row2">
-        <div class="field">
-          <label>Cod produs<span class="hint"> (SKU)</span></label>
-          <input type="text" name="cod_${id}" placeholder="ex: RF-001">
-        </div>
-        <div class="field">
-          <label>Brand <span class="required-star">*</span></label>
-          <input type="text" name="brand_${id}" placeholder="ex: Retro Future, Murmur..." required>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Nume produs <span class="required-star">*</span></label>
-        <input type="text" name="nume_produs_${id}" placeholder="ex: Rochie mini corset off white" required>
-      </div>
-
-      <div class="row3">
-        <div class="field">
-          <label>Mărime <span class="required-star">*</span></label>
-          <input type="text" name="marime_${id}" placeholder="ex: S, M, L, XS/S..." required>
-        </div>
-        <div class="field">
-          <label>Preț<span class="hint"> (lei)</span></label>
-          <div class="money-wrap">
-            <span class="money-prefix">Lei</span>
-            <input type="number" name="pret_${id}" placeholder="0" min="0" step="1" inputmode="numeric">
-          </div>
-        </div>
-        <div class="field">
-          <label>De câte ori cerut</label>
-          <input type="number" name="cerut_${id}" placeholder="1" min="1" value="1" inputmode="numeric">
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Observații</label>
-        <textarea name="obs_${id}" placeholder="ex: clienta voia roșu, nu alb; dispusă să aștepte reaprovizionare..."></textarea>
-      </div>
-    `;
-    list.appendChild(card);
-    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function changeCounter(delta) {
+    const el = document.getElementById('traficInput');
+    el.value = Math.max(0, (parseInt(el.value) || 0) + delta);
   }
 
-  function sterge(id) {
-    const card = document.getElementById(`produs-${id}`);
-    if (card) card.remove();
+  function updateNete() {
+    const z   = parseFloat(document.getElementById('totalZ').value) || 0;
+    const ret = parseFloat(document.getElementById('valRetururi').value) || 0;
+    document.getElementById('neteDisplay').textContent = Math.max(0, z - ret).toLocaleString('ro-RO');
   }
+  document.getElementById('totalZ').addEventListener('input', updateNete);
+  document.getElementById('valRetururi').addEventListener('input', updateNete);
+  document.getElementById('obsText').addEventListener('input', function() {
+    document.getElementById('charCount').textContent = this.value.length;
+  });
 
-  // Adauga primul produs automat
-  adaugaProdus();
-
-  document.getElementById('mainForm').addEventListener('submit', async function(e) {
+  document.getElementById('reportForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const fd = new FormData(this);
     const btn = document.getElementById('submitBtn');
     const statusBar = document.getElementById('statusBar');
 
-    // Colecteaza produsele
-    const produse = [];
-    const cards = document.querySelectorAll('.produs-card');
-    cards.forEach((card, idx) => {
-      const n = card.id.replace('produs-', '');
-      produse.push({
-        cod:        fd.get(`cod_${n}`) || '',
-        brand:      fd.get(`brand_${n}`) || '',
-        nume:       fd.get(`nume_produs_${n}`) || '',
-        marime:     fd.get(`marime_${n}`) || '',
-        pret:       fd.get(`pret_${n}`) || '0',
-        cerut:      fd.get(`cerut_${n}`) || '1',
-        observatii: fd.get(`obs_${n}`) || ''
-      });
-    });
-
-    if (produse.length === 0) {
-      alert('Adaugă cel puțin un produs.');
-      return;
-    }
-
-    const payload = {
-      tip:      'produse_lipsa',
-      magazin:  fd.get('magazin'),
-      data:     fd.get('data'),
-      nume:     fd.get('nume'),
-      produse
+    const data = {
+      magazin:      fd.get('magazin'),
+      data:         fd.get('data'),
+      nume:         fd.get('nume'),
+      total_z:      fd.get('total_z') || '0',
+      cash:         fd.get('cash') || '0',
+      card:         fd.get('card') || '0',
+      nr_bonuri:    fd.get('nr_bonuri') || '0',
+      vanzari_rf:   fd.get('vanzari_rf') || '0',
+      nr_retururi:  fd.get('nr_retururi') || '0',
+      val_retururi: fd.get('val_retururi') || '0',
+      trafic:       document.getElementById('traficInput').value || '0',
+      observatii:   fd.get('observatii') || ''
     };
 
     btn.disabled = true;
@@ -264,56 +240,68 @@
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(data)
       });
       savedOk = true;
-    } catch(err) {
+    } catch (err) {
       savedOk = false;
     }
 
     statusBar.className = savedOk ? 'status-bar saved' : 'status-bar error';
-    statusBar.textContent = savedOk ? '✓ Salvat în Google Sheets!' : '⚠️ Eroare la salvare. Trimite totuși pe WhatsApp.';
+    statusBar.textContent = savedOk
+      ? '✓ Salvat în Google Sheets!'
+      : '⚠️ Eroare la salvare în Sheets. Trimite totuși pe WhatsApp.';
 
-    // Construieste mesaj WhatsApp
-    const [y, m, d] = payload.data.split('-');
+    const totalZ  = parseFloat(data.total_z) || 0;
+    const valRet  = parseFloat(data.val_retururi) || 0;
+    const nete    = totalZ - valRet;
+    const rf      = parseFloat(data.vanzari_rf) || 0;
+    const pctRF   = nete > 0 ? Math.round((rf/nete)*100) + '%' : '-';
+    const bonuri  = parseInt(data.nr_bonuri) || 0;
+    const trafic  = parseInt(data.trafic) || 0;
+    const conversie = (trafic > 0 && bonuri > 0) ? Math.round((bonuri/trafic)*100) + '%' : 'N/A';
+    const [y, m, d] = data.data.split('-');
     const dateRO = `${d}.${m}.${y}`;
-    const ziSapt = ['Dum','Lun','Mar','Mie','Joi','Vin','Sâm'][new Date(payload.data).getDay()];
-
-    let liniiProduse = produse.map((p, i) => {
-      let linie = `\n*${i+1}. ${p.brand} — ${p.nume}*`;
-      if (p.cod) linie += ` (${p.cod})`;
-      linie += `\n   Mărime: ${p.marime}`;
-      if (p.pret && p.pret !== '0') linie += ` | Preț: ${parseInt(p.pret).toLocaleString('ro-RO')} lei`;
-      if (p.cerut && p.cerut !== '1') linie += ` | Cerut de ${p.cerut}x`;
-      if (p.observatii) linie += `\n   _${p.observatii}_`;
-      return linie;
-    }).join('\n');
+    const ziSapt = ['Dum','Lun','Mar','Mie','Joi','Vin','Sâm'][new Date(data.data).getDay()];
+    const returLine = parseInt(data.nr_retururi) > 0
+      ? `↩️ *Retururi:* ${data.nr_retururi} buc / ${valRet.toLocaleString('ro-RO')} lei`
+      : `↩️ *Retururi:* 0`;
+    const traficLine = trafic > 0
+      ? `👥 *Trafic:* ${trafic} clienți | Conversie: ${conversie}`
+      : `👥 *Trafic:* necontorizat`;
+    const obsLine = data.observatii ? `\n💬 *Obs:* ${data.observatii}` : '';
 
     const msg =
-`🛍️ *PRODUSE CERUTE & LIPSĂ*
-📍 ${payload.magazin} — ${ziSapt} ${dateRO}
-👤 ${payload.nume}
-${liniiProduse}`;
+`📊 *RAPORT ZILNIC*
+📍 ${data.magazin} — ${ziSapt} ${dateRO}
+👤 ${data.nume}
 
-    setTimeout(() => {
-      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-      document.getElementById('mainForm').style.display = 'none';
-      document.getElementById('successMsg').textContent =
-        `${produse.length} produs${produse.length > 1 ? 'e' : ''} salvat${produse.length > 1 ? 'e' : ''} în Sheets ✓ — Alege grupul în WhatsApp și apasă Trimite.`;
-      document.getElementById('success').style.display = 'block';
-    }, 800);
+💰 *Total Z:* ${totalZ.toLocaleString('ro-RO')} lei
+   💵 Cash: ${parseFloat(data.cash||0).toLocaleString('ro-RO')} lei | 💳 Card: ${parseFloat(data.card||0).toLocaleString('ro-RO')} lei
+   Bonuri: ${bonuri} | Coș mediu: ${bonuri > 0 ? Math.round(nete/bonuri).toLocaleString('ro-RO') : 0} lei
+${returLine}
+✅ *Vânzări nete:* ${nete.toLocaleString('ro-RO')} lei | RF: ${rf.toLocaleString('ro-RO')} lei (${pctRF})
+${traficLine}${obsLine}`;
+
+    // Deschide WhatsApp imediat (necesar pe iOS Safari)
+    window.location.href = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    document.getElementById('reportForm').style.display = 'none';
+    document.getElementById('successMsg').textContent = savedOk
+      ? 'Salvat în Sheets ✓ — Alege grupul în WhatsApp și apasă Trimite.'
+      : 'Alege grupul în WhatsApp și apasă Trimite.';
+    document.getElementById('success').style.display = 'block';
   });
 
   function resetForm() {
-    document.getElementById('mainForm').reset();
+    document.getElementById('reportForm').reset();
     document.getElementById('dataInput').value = `${yyyy}-${mm}-${dd}`;
-    document.getElementById('produseList').innerHTML = '';
-    produsCount = 0;
-    adaugaProdus();
+    document.getElementById('traficInput').value = 0;
+    document.getElementById('neteDisplay').textContent = '0';
+    document.getElementById('charCount').textContent = '0';
     document.getElementById('submitBtn').disabled = false;
-    document.getElementById('submitBtn').textContent = '✓ Trimite';
+    document.getElementById('submitBtn').textContent = '✓ Trimite raportul';
     document.getElementById('statusBar').className = 'status-bar';
-    document.getElementById('mainForm').style.display = 'block';
+    document.getElementById('reportForm').style.display = 'block';
     document.getElementById('success').style.display = 'none';
     window.scrollTo(0, 0);
   }
