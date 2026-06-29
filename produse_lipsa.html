@@ -3,306 +3,274 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raport Zilnic — Retro Future Babe</title>
+<title>Retro Future Babe — Comunitate</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --red: #E63946; --dark: #1A1A2E; --light-bg: #F7F7FA; --border: #E0E0E8; --text: #1A1A2E; --muted: #777; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--light-bg); color: var(--text); min-height: 100vh; padding-bottom: 60px; }
-  header { background: var(--dark); padding: 24px 24px 20px; position: sticky; top: 0; z-index: 10; }
-  header .brand { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 4px; }
-  header h1 { font-size: 20px; font-weight: 700; color: #fff; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--light-bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; }
+
+  header { background: var(--dark); padding: 32px 24px 28px; text-align: center; }
+  header .brand { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 8px; }
+  header h1 { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.3; }
+  header p { font-size: 14px; color: #aaa; margin-top: 8px; }
+
   .form-wrap { max-width: 520px; margin: 0 auto; padding: 0 16px; }
+
+  /* Tip selector */
+  .tip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
+  .tip-item input { display: none; }
+  .tip-item label {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 18px 10px; border: 2px solid var(--border); border-radius: 14px;
+    background: #fff; cursor: pointer; transition: all .15s; text-align: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tip-item label .ico { font-size: 28px; margin-bottom: 6px; }
+  .tip-item label .lbl { font-size: 13px; font-weight: 700; color: var(--dark); }
+  .tip-item label .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .tip-item input:checked + label { border-color: var(--red); background: #FFF0F1; }
+  .tip-item input:checked + label .lbl { color: var(--red); }
+
   .section { margin-top: 28px; }
   .section-label { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
   .field { margin-bottom: 16px; }
-  label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
-  label .hint { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 4px; }
-  input[type="text"], input[type="date"], input[type="number"], select, textarea { width: 100%; padding: 13px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 16px; background: #fff; color: var(--text); outline: none; transition: border-color .15s; -webkit-appearance: none; }
+  label.field-label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
+  label.field-label .hint { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 4px; }
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+    width: 100%; padding: 13px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: 16px; background: #fff; color: var(--text); outline: none; transition: border-color .15s; -webkit-appearance: none;
+  }
   input:focus, select:focus, textarea:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(230,57,70,.10); }
-  textarea { resize: vertical; min-height: 90px; font-size: 15px; }
+  textarea { resize: vertical; min-height: 110px; font-size: 15px; }
   select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .money-wrap { position: relative; }
-  .money-wrap input { padding-left: 48px; }
-  .money-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 700; color: var(--muted); pointer-events: none; }
-  .nete-box { background: var(--dark); border-radius: 10px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-  .nete-box .label { font-size: 12px; color: #aaa; font-weight: 500; }
-  .nete-box .value { font-size: 24px; font-weight: 800; color: #fff; }
-  .nete-box .value span { font-size: 14px; font-weight: 400; color: #aaa; margin-left: 4px; }
-  .counter-wrap { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; background: #fff; transition: border-color .15s; }
-  .counter-wrap:focus-within { border-color: var(--red); box-shadow: 0 0 0 3px rgba(230,57,70,.10); }
-  .counter-btn { width: 52px; height: 52px; background: var(--light-bg); border: none; font-size: 22px; color: var(--dark); cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: background .1s; -webkit-tap-highlight-color: transparent; }
-  .counter-btn:active { background: var(--border); }
-  .counter-input { flex: 1; border: none !important; box-shadow: none !important; text-align: center; font-size: 22px; font-weight: 700; padding: 13px 4px !important; border-radius: 0 !important; }
-  .divider { height: 1px; background: var(--border); margin: 32px 0 0; }
-  .char-count { font-size: 11px; color: var(--muted); text-align: right; margin-top: 4px; }
   .required-star { color: var(--red); margin-left: 2px; }
-  .submit-btn { display: block; width: 100%; margin-top: 28px; padding: 17px; background: var(--red); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .15s, transform .1s; -webkit-tap-highlight-color: transparent; }
+
+  /* GDPR box */
+  .gdpr-box {
+    background: #fff; border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 16px; margin-top: 8px;
+  }
+  .gdpr-box p { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+  .gdpr-check { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+  .gdpr-check input[type="checkbox"] { width: 20px; height: 20px; min-width: 20px; margin-top: 1px; accent-color: var(--red); cursor: pointer; }
+  .gdpr-check span { font-size: 13px; font-weight: 600; color: var(--dark); line-height: 1.5; }
+
+  .divider { height: 1px; background: var(--border); margin: 28px 0 0; }
+
+  .submit-btn { display: block; width: 100%; margin-top: 24px; padding: 17px; background: var(--red); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .15s, transform .1s; -webkit-tap-highlight-color: transparent; }
   .submit-btn:active { background: #C0303C; transform: scale(.98); }
   .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+
   .status-bar { display: none; margin-top: 12px; padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; text-align: center; }
   .status-bar.saving { display: block; background: #FFF3CD; color: #856404; }
   .status-bar.saved { display: block; background: #D4EDDA; color: #155724; }
   .status-bar.error { display: block; background: #F8D7DA; color: #721C24; }
+
   #success { display: none; text-align: center; padding: 60px 24px; }
-  #success .check { font-size: 56px; margin-bottom: 16px; }
-  #success h2 { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
-  #success p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+  #success .check { font-size: 64px; margin-bottom: 16px; }
+  #success h2 { font-size: 22px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+  #success p { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 28px; }
   #success button { background: var(--dark); color: #fff; border: none; border-radius: 10px; padding: 14px 32px; font-size: 15px; font-weight: 600; cursor: pointer; }
-  @media (max-width: 380px) { .row2 { grid-template-columns: 1fr; } }
+
+  .hidden { display: none; }
+  @media (max-width: 360px) { .tip-grid { grid-template-columns: 1fr 1fr; } }
 </style>
 </head>
 <body>
+
 <header>
-  <img src="data:image/png;base64,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" alt="Retro Future" style="height:72px;margin-bottom:10px;display:block;">
-  <h1>Raport Zilnic Magazin</h1>
+  <img src="data:image/png;base64,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" alt="Retro Future" style="height:72px;margin-bottom:10px;display:block;margin-left:auto;margin-right:auto;">
+  <h1>Comunitatea noastră<br>te așteaptă ✨</h1>
+  <p>Înscrie-te, lasă-ne o sugestie, opinie sau reclamație</p>
 </header>
+
 <div class="form-wrap">
-  <form id="reportForm">
+  <form id="mainForm">
 
+    <!-- TIP -->
     <div class="section">
-      <div class="section-label">Identificare</div>
-      <div class="row2">
-        <div class="field">
-          <label>Magazin <span class="required-star">*</span></label>
-          <select name="magazin" required>
-            <option value="" disabled selected>Alege...</option>
-            <option value="AFI Mall București">AFI Mall București</option>
-            <option value="Iulius Mall Cluj">Iulius Mall Cluj</option>
-            <option value="Palas Iași">Palas Iași</option>
-            <option value="Promenada București">Promenada București</option>
-          </select>
+      <div class="section-label">Ce dorești?</div>
+      <div class="tip-grid">
+        <div class="tip-item">
+          <input type="radio" name="tip" value="Inscriere" id="t1" required>
+          <label for="t1"><span class="ico">🎀</span><span class="lbl">Înscriere</span><span class="sub">Bază de date clienți</span></label>
         </div>
-        <div class="field">
-          <label>Data <span class="required-star">*</span></label>
-          <input type="date" name="data" required id="dataInput">
+        <div class="tip-item">
+          <input type="radio" name="tip" value="Sugestie" id="t2">
+          <label for="t2"><span class="ico">💡</span><span class="lbl">Sugestie</span><span class="sub">Idei pentru noi</span></label>
+        </div>
+        <div class="tip-item">
+          <input type="radio" name="tip" value="Opinie" id="t3">
+          <label for="t3"><span class="ico">⭐</span><span class="lbl">Opinie</span><span class="sub">Experiența ta</span></label>
+        </div>
+        <div class="tip-item">
+          <input type="radio" name="tip" value="Reclamatie" id="t4">
+          <label for="t4"><span class="ico">📢</span><span class="lbl">Reclamație</span><span class="sub">Rezolvăm împreună</span></label>
         </div>
       </div>
+    </div>
+
+    <!-- DATE PERSONALE -->
+    <div class="section">
+      <div class="section-label">Date personale</div>
+
       <div class="field">
-        <label>Completat de <span class="required-star">*</span></label>
-        <input type="text" name="nume" placeholder="Prenumele tău" required autocomplete="given-name">
+        <label class="field-label">Nume complet <span class="required-star">*</span></label>
+        <input type="text" name="nume" placeholder="Prenume Nume" required autocomplete="name">
       </div>
-    </div>
 
-    <div class="section">
-      <div class="section-label">Vânzări</div>
       <div class="field">
-        <label>Total Z <span class="required-star">*</span><span class="hint">(valoarea din casa de marcat, lei)</span></label>
-        <div class="money-wrap">
-          <span class="money-prefix">Lei</span>
-          <input type="number" name="total_z" id="totalZ" placeholder="0" min="0" step="1" required inputmode="numeric">
-        </div>
+        <label class="field-label">Număr de telefon <span class="required-star">*</span></label>
+        <input type="tel" name="telefon" placeholder="07XX XXX XXX" required autocomplete="tel" inputmode="tel">
       </div>
-      <div class="row2">
-        <div class="field">
-          <label>Din care Cash<span class="hint"> (lei)</span></label>
-          <div class="money-wrap">
-            <span class="money-prefix">Lei</span>
-            <input type="number" name="cash" placeholder="0" min="0" step="1" inputmode="numeric">
-          </div>
-        </div>
-        <div class="field">
-          <label>Din care Card<span class="hint"> (lei)</span></label>
-          <div class="money-wrap">
-            <span class="money-prefix">Lei</span>
-            <input type="number" name="card" placeholder="0" min="0" step="1" inputmode="numeric">
-          </div>
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label>Nr. bonuri <span class="required-star">*</span></label>
-          <input type="number" name="nr_bonuri" id="nrBonuri" placeholder="0" min="0" required inputmode="numeric">
-        </div>
-        <div class="field">
-          <label>Din care RF<span class="hint"> (lei)</span></label>
-          <div class="money-wrap">
-            <span class="money-prefix">Lei</span>
-            <input type="number" name="vanzari_rf" placeholder="0" min="0" step="1" inputmode="numeric">
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="section">
-      <div class="section-label">Retururi</div>
-      <div class="row2">
-        <div class="field">
-          <label>Nr. retururi</label>
-          <input type="number" name="nr_retururi" placeholder="0" min="0" inputmode="numeric">
-        </div>
-        <div class="field">
-          <label>Valoare retururi<span class="hint"> (lei)</span></label>
-          <div class="money-wrap">
-            <span class="money-prefix">Lei</span>
-            <input type="number" name="val_retururi" id="valRetururi" placeholder="0" min="0" step="1" inputmode="numeric">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Vânzări Nete</div>
-      <div class="nete-box">
-        <div class="label">Total Z − Retururi</div>
-        <div class="value"><span id="neteDisplay">0</span> <span>lei</span></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Trafic</div>
       <div class="field">
-        <label>Clienți intrați <span class="required-star">*</span><span class="hint"> (0 = necontorizat)</span></label>
-        <div class="counter-wrap">
-          <button type="button" class="counter-btn" onclick="changeCounter(-1)">−</button>
-          <input type="number" class="counter-input" name="trafic" id="traficInput" value="0" min="0" inputmode="numeric" readonly>
-          <button type="button" class="counter-btn" onclick="changeCounter(+1)">+</button>
-        </div>
+        <label class="field-label">Adresă email <span class="required-star">*</span></label>
+        <input type="email" name="email" placeholder="adresa@email.com" required autocomplete="email" inputmode="email">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Magazinul preferat <span class="required-star">*</span></label>
+        <select name="locatie" required>
+          <option value="" disabled selected>Alege locația...</option>
+          <option value="AFI Mall București">AFI Mall București</option>
+          <option value="Iulius Mall Cluj">Iulius Mall Cluj</option>
+          <option value="Palas Iași">Palas Iași</option>
+          <option value="Promenada București">Promenada București</option>
+          <option value="Online">Online</option>
+        </select>
       </div>
     </div>
 
+    <!-- MESAJ -->
     <div class="section">
-      <div class="section-label">Observații</div>
+      <div class="section-label">Mesaj</div>
       <div class="field">
-        <textarea name="observatii" id="obsText" placeholder="Produse cerute și lipsă, feedback clienți, probleme, atmosferă..." maxlength="500"></textarea>
-        <div class="char-count"><span id="charCount">0</span>/500</div>
+        <label class="field-label" id="obsLabel">Sugestii / Opinii / Observații<span class="hint"> (opțional)</span></label>
+        <textarea name="mesaj" id="mesajInput" placeholder="Scrie-ne orice..."></textarea>
+      </div>
+    </div>
+
+    <!-- GDPR -->
+    <div class="section">
+      <div class="section-label">Acord GDPR</div>
+      <div class="gdpr-box">
+        <p>Datele tale personale (nume, telefon, email, locație) sunt colectate și prelucrate de <strong>Retro Future Babe</strong> în scopul comunicărilor comerciale, îmbunătățirii serviciilor și gestionării solicitărilor tale, în conformitate cu <strong>Regulamentul (UE) 2016/679 (GDPR)</strong>. Datele nu vor fi transmise către terți fără consimțământul tău. Ai dreptul de acces, rectificare, ștergere și opoziție, pe care le poți exercita contactând: <strong>contact@retrofuturebabe.com</strong>. Datele vor fi păstrate pe o perioadă de maximum 3 ani sau până la retragerea consimțământului.</p>
+        <label class="gdpr-check">
+          <input type="checkbox" id="gdprCheck" required>
+          <span>Am citit și sunt de acord cu prelucrarea datelor mele personale în conformitate cu politica de confidențialitate RFB. <span class="required-star">*</span></span>
+        </label>
       </div>
     </div>
 
     <div class="divider"></div>
-    <button type="submit" class="submit-btn" id="submitBtn">✓ Trimite raportul</button>
+    <button type="submit" class="submit-btn" id="submitBtn">✓ Trimite</button>
     <div class="status-bar" id="statusBar"></div>
+
   </form>
 
   <div id="success">
-    <div class="check">✅</div>
-    <h2>Raport trimis!</h2>
-    <p id="successMsg"></p>
-    <button onclick="resetForm()">+ Raport nou</button>
+    <div class="check" id="successIco">🎀</div>
+    <h2 id="successTitle">Mulțumim!</h2>
+    <p id="successMsg">Te-ai înscris cu succes în comunitatea Retro Future Babe. Te vom contacta cu noutăți și oferte exclusive.</p>
+    <button onclick="resetForm()">← Înapoi</button>
   </div>
 </div>
 
 <script>
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgtrzrxb6uXkPHN-k82bs3mfwAxZHYA5N_opo8fAJ8iXRsbJzMnh0N4Joys0o2Hjug/exec";
 
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth()+1).padStart(2,'0');
-  const dd = String(today.getDate()).padStart(2,'0');
-  document.getElementById('dataInput').value = `${yyyy}-${mm}-${dd}`;
+  // Adapteaza label mesaj in functie de tip
+  const tipInputs = document.querySelectorAll('input[name="tip"]');
+  const obsLabel  = document.getElementById('obsLabel');
+  const mesaj     = document.getElementById('mesajInput');
 
-  function changeCounter(delta) {
-    const el = document.getElementById('traficInput');
-    el.value = Math.max(0, (parseInt(el.value) || 0) + delta);
-  }
+  const config = {
+    'Inscriere':  { label: 'Observații', hint: ' (opțional)', placeholder: 'Preferințe, mărimi, stiluri preferate...' },
+    'Sugestie':   { label: 'Sugestia ta', hint: ' *', placeholder: 'Spune-ne ce ai vrea să îmbunătățim sau să adăugăm...' },
+    'Opinie':     { label: 'Opinia ta', hint: ' *', placeholder: 'Cum a fost experiența ta cu noi?' },
+    'Reclamatie': { label: 'Descrie problema', hint: ' *', placeholder: 'Ce s-a întâmplat? Cu cât mai multe detalii, cu atât mai bine.' },
+  };
 
-  function updateNete() {
-    const z   = parseFloat(document.getElementById('totalZ').value) || 0;
-    const ret = parseFloat(document.getElementById('valRetururi').value) || 0;
-    document.getElementById('neteDisplay').textContent = Math.max(0, z - ret).toLocaleString('ro-RO');
-  }
-  document.getElementById('totalZ').addEventListener('input', updateNete);
-  document.getElementById('valRetururi').addEventListener('input', updateNete);
-  document.getElementById('obsText').addEventListener('input', function() {
-    document.getElementById('charCount').textContent = this.value.length;
+  tipInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      const c = config[input.value];
+      if (c) {
+        obsLabel.innerHTML = `${c.label}<span class="hint">${c.hint}</span>`;
+        mesaj.placeholder = c.placeholder;
+        if (c.hint === ' *') mesaj.required = true;
+        else mesaj.required = false;
+      }
+    });
   });
 
-  document.getElementById('reportForm').addEventListener('submit', async function(e) {
+  // Submit
+  document.getElementById('mainForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const fd = new FormData(this);
+    const fd  = new FormData(this);
     const btn = document.getElementById('submitBtn');
     const statusBar = document.getElementById('statusBar');
 
-    const data = {
-      magazin:      fd.get('magazin'),
-      data:         fd.get('data'),
-      nume:         fd.get('nume'),
-      total_z:      fd.get('total_z') || '0',
-      cash:         fd.get('cash') || '0',
-      card:         fd.get('card') || '0',
-      nr_bonuri:    fd.get('nr_bonuri') || '0',
-      vanzari_rf:   fd.get('vanzari_rf') || '0',
-      nr_retururi:  fd.get('nr_retururi') || '0',
-      val_retururi: fd.get('val_retururi') || '0',
-      trafic:       document.getElementById('traficInput').value || '0',
-      observatii:   fd.get('observatii') || ''
+    const payload = {
+      tip:      'client',
+      subtip:   fd.get('tip') || '',
+      nume:     fd.get('nume') || '',
+      telefon:  fd.get('telefon') || '',
+      email:    fd.get('email') || '',
+      locatie:  fd.get('locatie') || '',
+      mesaj:    fd.get('mesaj') || '',
+      gdpr:     'Da — acord dat la submit',
+      timestamp: new Date().toISOString()
     };
 
     btn.disabled = true;
     btn.textContent = 'Se salvează...';
     statusBar.className = 'status-bar saving';
-    statusBar.textContent = '⏳ Se salvează în Google Sheets...';
+    statusBar.textContent = '⏳ Se înregistrează...';
 
-    let savedOk = false;
     try {
-      const response = await fetch(APPS_SCRIPT_URL, {
+      await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(payload)
       });
-      savedOk = true;
-    } catch (err) {
-      savedOk = false;
+      statusBar.className = 'status-bar saved';
+      statusBar.textContent = '✓ Înregistrat!';
+    } catch(err) {
+      statusBar.className = 'status-bar error';
+      statusBar.textContent = '⚠️ Eroare la salvare.';
     }
 
-    statusBar.className = savedOk ? 'status-bar saved' : 'status-bar error';
-    statusBar.textContent = savedOk
-      ? '✓ Salvat în Google Sheets!'
-      : '⚠️ Eroare la salvare în Sheets. Trimite totuși pe WhatsApp.';
+    // Mesaj succes adaptat
+    const msgs = {
+      'Inscriere':  { ico: '🎀', title: 'Bine ai venit!', msg: 'Te-ai înscris cu succes în comunitatea Retro Future Babe. Te vom contacta cu noutăți și oferte exclusive.' },
+      'Sugestie':   { ico: '💡', title: 'Mulțumim!', msg: 'Sugestia ta a fost înregistrată. O citim cu atenție și îți mulțumim că ne ajuți să ne îmbunătățim.' },
+      'Opinie':     { ico: '⭐', title: 'Mulțumim!', msg: 'Opinia ta contează enorm pentru noi. Ne bucurăm că ai luat timp să ne scrii.' },
+      'Reclamatie': { ico: '📢', title: 'Am primit!', msg: 'Reclamația ta a fost înregistrată. Te vom contacta în cel mai scurt timp pentru a rezolva situația.' },
+    };
+    const m = msgs[payload.subtip] || msgs['Inscriere'];
 
-    const totalZ  = parseFloat(data.total_z) || 0;
-    const valRet  = parseFloat(data.val_retururi) || 0;
-    const nete    = totalZ - valRet;
-    const rf      = parseFloat(data.vanzari_rf) || 0;
-    const pctRF   = nete > 0 ? Math.round((rf/nete)*100) + '%' : '-';
-    const bonuri  = parseInt(data.nr_bonuri) || 0;
-    const trafic  = parseInt(data.trafic) || 0;
-    const conversie = (trafic > 0 && bonuri > 0) ? Math.round((bonuri/trafic)*100) + '%' : 'N/A';
-    const [y, m, d] = data.data.split('-');
-    const dateRO = `${d}.${m}.${y}`;
-    const ziSapt = ['Dum','Lun','Mar','Mie','Joi','Vin','Sâm'][new Date(data.data).getDay()];
-    const returLine = parseInt(data.nr_retururi) > 0
-      ? `↩️ *Retururi:* ${data.nr_retururi} buc / ${valRet.toLocaleString('ro-RO')} lei`
-      : `↩️ *Retururi:* 0`;
-    const traficLine = trafic > 0
-      ? `👥 *Trafic:* ${trafic} clienți | Conversie: ${conversie}`
-      : `👥 *Trafic:* necontorizat`;
-    const obsLine = data.observatii ? `\n💬 *Obs:* ${data.observatii}` : '';
-
-    const msg =
-`📊 *RAPORT ZILNIC*
-📍 ${data.magazin} — ${ziSapt} ${dateRO}
-👤 ${data.nume}
-
-💰 *Total Z:* ${totalZ.toLocaleString('ro-RO')} lei
-   💵 Cash: ${parseFloat(data.cash||0).toLocaleString('ro-RO')} lei | 💳 Card: ${parseFloat(data.card||0).toLocaleString('ro-RO')} lei
-   Bonuri: ${bonuri} | Coș mediu: ${bonuri > 0 ? Math.round(nete/bonuri).toLocaleString('ro-RO') : 0} lei
-${returLine}
-✅ *Vânzări nete:* ${nete.toLocaleString('ro-RO')} lei | RF: ${rf.toLocaleString('ro-RO')} lei (${pctRF})
-${traficLine}${obsLine}`;
-
-    // Deschide WhatsApp imediat (necesar pe iOS Safari)
-    window.location.href = `https://wa.me/?text=${encodeURIComponent(msg)}`;
-    document.getElementById('reportForm').style.display = 'none';
-    document.getElementById('successMsg').textContent = savedOk
-      ? 'Salvat în Sheets ✓ — Alege grupul în WhatsApp și apasă Trimite.'
-      : 'Alege grupul în WhatsApp și apasă Trimite.';
-    document.getElementById('success').style.display = 'block';
+    
+      document.getElementById('mainForm').style.display = 'none';
+      document.getElementById('successIco').textContent  = m.ico;
+      document.getElementById('successTitle').textContent = m.title;
+      document.getElementById('successMsg').textContent   = m.msg;
+      document.getElementById('success').style.display   = 'block';
+    
   });
 
   function resetForm() {
-    document.getElementById('reportForm').reset();
-    document.getElementById('dataInput').value = `${yyyy}-${mm}-${dd}`;
-    document.getElementById('traficInput').value = 0;
-    document.getElementById('neteDisplay').textContent = '0';
-    document.getElementById('charCount').textContent = '0';
+    document.getElementById('mainForm').reset();
+    document.getElementById('mainForm').style.display = 'block';
+    document.getElementById('success').style.display  = 'none';
     document.getElementById('submitBtn').disabled = false;
-    document.getElementById('submitBtn').textContent = '✓ Trimite raportul';
+    document.getElementById('submitBtn').textContent = '✓ Trimite';
     document.getElementById('statusBar').className = 'status-bar';
-    document.getElementById('reportForm').style.display = 'block';
-    document.getElementById('success').style.display = 'none';
+    obsLabel.innerHTML = 'Sugestii / Opinii / Observații<span class="hint"> (opțional)</span>';
+    mesaj.placeholder = 'Scrie-ne orice...';
     window.scrollTo(0, 0);
   }
 </script>
