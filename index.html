@@ -283,14 +283,13 @@ ${returLine}
 ✅ *Vânzări nete:* ${nete.toLocaleString('ro-RO')} lei | RF: ${rf.toLocaleString('ro-RO')} lei (${pctRF})
 ${traficLine}${obsLine}`;
 
-    setTimeout(() => {
-      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-      document.getElementById('reportForm').style.display = 'none';
-      document.getElementById('successMsg').textContent = savedOk
-        ? 'Salvat în Sheets ✓ — Alege grupul în WhatsApp și apasă Trimite.'
-        : 'Alege grupul în WhatsApp și apasă Trimite.';
-      document.getElementById('success').style.display = 'block';
-    }, 800);
+    // Deschide WhatsApp imediat (necesar pe iOS Safari)
+    window.location.href = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    document.getElementById('reportForm').style.display = 'none';
+    document.getElementById('successMsg').textContent = savedOk
+      ? 'Salvat în Sheets ✓ — Alege grupul în WhatsApp și apasă Trimite.'
+      : 'Alege grupul în WhatsApp și apasă Trimite.';
+    document.getElementById('success').style.display = 'block';
   });
 
   function resetForm() {
